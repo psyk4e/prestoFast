@@ -21,9 +21,13 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registrar Cliente'),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
+        titleTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.grey[50], // Color de fondo suave
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -33,8 +37,13 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
               TextFormField(
                 controller: _nombreController,
                 decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  floatingLabelStyle: TextStyle(color: Colors.blue),
                   labelText: 'Nombre del cliente',
                   border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -49,6 +58,9 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Cantidad prestada',
                   border: OutlineInputBorder(),
+                  floatingLabelStyle: TextStyle(color: Colors.blue),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -64,6 +76,9 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Número de cuotas',
                   border: OutlineInputBorder(),
+                  floatingLabelStyle: TextStyle(color: Colors.blue),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -73,11 +88,12 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blueAccent,
                   foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 50),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   shape: RoundedRectangleBorder(
@@ -117,7 +133,11 @@ class _RegistrarClienteScreenState extends State<RegistrarClienteScreen> {
                     );
                   }
                 },
-                child: const Text('Registrar'),
+                child: const Wrap(children: <Widget>[
+                  Icon(Icons.save),
+                  SizedBox(width: 10),
+                  Text('Registrar')
+                ]),
               ),
             ],
           ),
