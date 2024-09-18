@@ -19,8 +19,12 @@ class _PagoScreenState extends State<PagoScreen> {
       appBar: AppBar(
         title: const Text('Pago de Cuota'),
         backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
+        titleTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.grey[50], // Color de fondo suave
         padding: const EdgeInsets.all(16.0),
         child: Consumer<ClienteProvider>(
           builder: (context, clienteProvider, child) {
@@ -38,48 +42,55 @@ class _PagoScreenState extends State<PagoScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: DropdownButton<Cliente>(
-                        hint: const Text('Selecciona un cliente'),
-                        value: clienteSeleccionado,
-                        onChanged: (Cliente? value) {
-                          setState(() {
-                            clienteSeleccionado = value;
-                          });
-                        },
-                        items: clienteProvider.clientes.map((Cliente cliente) {
-                          return DropdownMenuItem<Cliente>(
-                            value: cliente,
-                            child: Text(cliente.nombre),
-                          );
-                        }).toList(),
-                      ),
-                    ),
+                  DropdownButton<Cliente>(
+                    hint: const Text('Selecciona un cliente'),
+                    isExpanded: true,
+                    value: clienteSeleccionado,
+                    dropdownColor: Color(Colors.grey[100]!.value),
+                    onChanged: (Cliente? value) {
+                      setState(() {
+                        clienteSeleccionado = value;
+                      });
+                    },
+                    items: clienteProvider.clientes.map((Cliente cliente) {
+                      return DropdownMenuItem<Cliente>(
+                        value: cliente,
+                        child: Text(cliente.nombre),
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(height: 20),
                   if (clienteSeleccionado != null) ...[
                     Card(
                       elevation: 5,
+                      color: Color(Colors.grey[100]!.value),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Cuotas pagadas: ${clienteSeleccionado!.cuotasPagadas}',
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              'Cuotas restantes: ${clienteSeleccionado!.cuotasTotales - clienteSeleccionado!.cuotasPagadas}',
-                              style: const TextStyle(fontSize: 18),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  'Cuotas pagadas: ${clienteSeleccionado!.cuotasPagadas}',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                                Text(
+                                  'Cuotas restantes: ${clienteSeleccionado!.cuotasTotales - clienteSeleccionado!.cuotasPagadas}',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.blueAccent,
+                                minimumSize: const Size(double.infinity, 50),
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 15),
